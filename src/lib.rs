@@ -267,9 +267,10 @@ mod result;
 mod row;
 mod tds;
 
-mod sql_browser;
 mod bulk_options;
+mod sql_browser;
 
+pub use bulk_options::{ColumOrderHint, SortOrder, SqlBulkCopyOptions};
 pub use client::{AuthMethod, Client, Config};
 pub(crate) use error::Error;
 pub use from_sql::{FromSql, FromSqlOwned};
@@ -277,6 +278,8 @@ pub use query::Query;
 pub use result::*;
 pub use row::{Column, ColumnType, Row};
 pub use sql_browser::SqlBrowser;
+use sql_read_bytes::*;
+use tds::codec::*;
 pub use tds::{
     codec::{BulkLoadRequest, ColumnData, ColumnFlag, IntoRow, TokenRow, TypeLength},
     numeric,
@@ -285,9 +288,6 @@ pub use tds::{
 };
 pub use to_sql::{IntoSql, ToSql};
 pub use uuid::Uuid;
-pub use bulk_options::{SqlBulkCopyOptions, SortOrder, ColumOrderHint};
-use sql_read_bytes::*;
-use tds::codec::*;
 
 /// An alias for a result that holds crate's error type as the error.
 pub type Result<T> = std::result::Result<T, Error>;

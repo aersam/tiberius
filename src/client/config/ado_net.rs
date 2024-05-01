@@ -1,6 +1,7 @@
 use super::{ConfigString, ServerDefinition};
 use std::str::FromStr;
 
+#[derive(Debug)]
 pub struct AdoNetConfig {
     dict: connection_string::AdoNetString,
 }

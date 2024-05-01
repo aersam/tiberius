@@ -312,7 +312,9 @@ impl<'a> Encode<BytesMutWithTypeInfo<'a>> for ColumnData<'a> {
                         true,
                     );
                     if let encoding_rs::EncoderResult::Unmappable(c) = res {
-                        return Err(crate::Error::Encoding(format!("unrepresentable character:{}", c).into()));
+                        return Err(crate::Error::Encoding(
+                            format!("unrepresentable character:{}", c).into(),
+                        ));
                     }
 
                     if bytes.len() > vlc.len() {

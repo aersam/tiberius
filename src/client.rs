@@ -14,7 +14,8 @@ pub use auth::*;
 pub use config::*;
 pub(crate) use connection::*;
 
-use crate::bulk_options::{SqlBulkCopyOptions, ColumOrderHint};
+use crate::bulk_options::{ColumOrderHint, SqlBulkCopyOptions};
+pub use crate::client::config::ado_net::AdoNetConfig;
 use crate::tds::stream::ReceivedToken;
 use crate::{
     result::ExecuteResult,
@@ -29,7 +30,6 @@ use enumflags2::BitFlags;
 use futures_util::io::{AsyncRead, AsyncWrite};
 use futures_util::stream::TryStreamExt;
 use std::{borrow::Cow, fmt::Debug};
-pub use crate::client::config::ado_net::AdoNetConfig;
 
 /// `Client` is the main entry point to the SQL Server, providing query
 /// execution capabilities.
@@ -258,7 +258,9 @@ impl<S: AsyncRead + AsyncWrite + Unpin + Send> Client<S> {
         &'a mut self,
         table: &'a str,
     ) -> crate::Result<BulkLoadRequest<'a, S>> {
-        return self.bulk_insert_with_options(table, &[], Default::default(), &[]).await;
+        return self
+            .bulk_insert_with_options(table, &[], Default::default(), &[])
+            .await;
     }
 
     /// Execute a `BULK INSERT` statement, efficiantly storing a large number of
@@ -390,10 +392,16 @@ impl<S: AsyncRead + AsyncWrite + Unpin + Send> Client<S> {
                 query.push_str(
                     &order_hints
                         .iter()
-                        .map(|(col, order)| format!("{} {}", col, match order {
-                            crate::bulk_options::SortOrder::Ascending => "ASC",
-                            crate::bulk_options::SortOrder::Descending => "DESC",
-                        }))
+                        .map(|(col, order)| {
+                            format!(
+                                "{} {}",
+                                col,
+                                match order {
+                                    crate::bulk_options::SortOrder::Ascending => "ASC",
+                                    crate::bulk_options::SortOrder::Descending => "DESC",
+                                }
+                            )
+                        })
                         .join(", "),
                 );
                 query.push_str(")");
