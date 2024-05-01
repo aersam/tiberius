@@ -272,13 +272,13 @@ impl Config {
     }
 }
 
-pub(crate) struct ServerDefinition {
+pub struct ServerDefinition {
     host: Option<String>,
     port: Option<u16>,
     instance: Option<String>,
 }
 
-pub(crate) trait ConfigString {
+pub trait ConfigString {
     fn dict(&self) -> &HashMap<String, String>;
 
     fn server(&self) -> crate::Result<ServerDefinition>;
