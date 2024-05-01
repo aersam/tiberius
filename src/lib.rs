@@ -256,7 +256,7 @@ pub(crate) extern crate bigdecimal_ as bigdecimal;
 #[macro_use]
 mod macros;
 
-mod client;
+pub mod client;
 mod from_sql;
 mod query;
 mod sql_read_bytes;

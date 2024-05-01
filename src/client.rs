@@ -29,6 +29,7 @@ use enumflags2::BitFlags;
 use futures_util::io::{AsyncRead, AsyncWrite};
 use futures_util::stream::TryStreamExt;
 use std::{borrow::Cow, fmt::Debug};
+pub use crate::client::config::ado_net::AdoNetConfig;
 
 /// `Client` is the main entry point to the SQL Server, providing query
 /// execution capabilities.
