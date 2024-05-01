@@ -273,9 +273,9 @@ impl Config {
 }
 
 pub struct ServerDefinition {
-    host: Option<String>,
-    port: Option<u16>,
-    instance: Option<String>,
+    pub host: Option<String>,
+    pub port: Option<u16>,
+    pub instance: Option<String>,
 }
 
 pub trait ConfigString {
