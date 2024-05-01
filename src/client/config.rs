@@ -229,7 +229,7 @@ impl Config {
         Self::from_config_string(jdbc)
     }
 
-    fn from_config_string(s: impl ConfigString) -> crate::Result<Self> {
+    pub fn from_config_string(s: impl ConfigString) -> crate::Result<Self> {
         let mut builder = Self::new();
 
         let server = s.server()?;
